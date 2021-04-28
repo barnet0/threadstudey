@@ -1,7 +1,6 @@
 package com.study.demo.thread;
 
 
-
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
 
@@ -31,10 +30,14 @@ public class AtomicVsSyncVsLongAdder {
             });
         }
         long start = System.currentTimeMillis();
-        for (Thread t : threads) t.start();
-        for (Thread t: threads) t.join();
+        for (Thread t : threads) {
+            t.start();
+        }
+        for (Thread t : threads) {
+            t.join();
+        }
         long end = System.currentTimeMillis();
-        System.out.println("Atomic: " + count1.get() + " time " + (end-start));
+        System.out.println("Atomic: " + count1.get() + " time " + (end - start));
 
 
         Object lock = new Object();
@@ -42,8 +45,8 @@ public class AtomicVsSyncVsLongAdder {
             threads[i] = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int j = 0; j <100000 ; j++) {
-                        synchronized (lock){
+                    for (int j = 0; j < 100000; j++) {
+                        synchronized (lock) {
                             count2++;
                         }
                     }
@@ -51,10 +54,14 @@ public class AtomicVsSyncVsLongAdder {
             });
         }
         start = System.currentTimeMillis();
-        for (Thread t : threads) t.start();
-        for (Thread t: threads) t.join();
+        for (Thread t : threads) {
+            t.start();
+        }
+        for (Thread t : threads) {
+            t.join();
+        }
         end = System.currentTimeMillis();
-        System.out.println("Sync: " + count2 + " time " + (end -start));
+        System.out.println("Sync: " + count2 + " time " + (end - start));
 
         for (int i = 0; i < threads.length; i++) {
             threads[i] = new Thread(() -> {
@@ -64,10 +71,14 @@ public class AtomicVsSyncVsLongAdder {
             });
         }
         start = System.currentTimeMillis();
-        for (Thread t : threads) t.start();
-        for (Thread t: threads) t.join();
+        for (Thread t : threads) {
+            t.start();
+        }
+        for (Thread t : threads) {
+            t.join();
+        }
         end = System.currentTimeMillis();
-        System.out.println("LongAdder: " + count3.longValue() + " time " + (end -start));
+        System.out.println("LongAdder: " + count3.longValue() + " time " + (end - start));
     }
 
 }

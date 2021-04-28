@@ -14,12 +14,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadTest {
 
-   // /*volatile*/  int count = 0;
+    // /*volatile*/  int count = 0;
 
     AtomicInteger count = new AtomicInteger(0);
+
     //synchronized
-    void m(){
-        for (int i=0;i<10000;i++){
+    void m() {
+        for (int i = 0; i < 10000; i++) {
             //count这个值保证了可见性，++本身没有保证原子性，解决方法加sync
             //count++;
             count.incrementAndGet();
@@ -29,14 +30,14 @@ public class ThreadTest {
     public static void main(String[] args) {
         ThreadTest threadTest = new ThreadTest();
         List<Thread> threads = Lists.newArrayList();
-        for (int i=0;i<10;i++){
-            threads.add(new Thread(threadTest::m,"threadName-"+i));
+        for (int i = 0; i < 10; i++) {
+            threads.add(new Thread(threadTest::m, "threadName-" + i));
         }
         threads.forEach(Thread::start);
         threads.forEach((o) -> {
             try {
                 o.join();
-            }catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
